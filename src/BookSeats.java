@@ -8,15 +8,26 @@ public class BookSeats {
     */
     public BookSeats() {}
 
-    public void chooseTickets (String user, Theatre theatre, Show show, List<Integer> seatIds) {
+    public boolean chooseTickets (String user, String theatreName, Show show, List<Integer> seatIds) {
         Seat[] allSeats = show.getSeats();
+
         for(int seat : seatIds) {
             synchronized (allSeats[seat]) {
                 // if (isPaymentCompleted == true)
+                    if (allSeats[seat].isBooked) return false;
                     allSeats[seat].bookSeat(user);
-                    System.out.println(user+ " successfully booked ticket - "+seat);
+                    // System.out.println(user+ " successfully booked ticket - "+seat+" at "+theatreName+" of show "+show.getShowTime());
             }
         }
+        return true;
+    }
+
+    public boolean areChoosenTicketsBooked(Show show, List<Integer> seatIds) {
+        Seat[] allSeats = show.getSeats();
+        for (Seat seat : allSeats)
+            if (seat != null && seat.isBooked) return true;
+
+        return false;
     }
 
 }

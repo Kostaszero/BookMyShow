@@ -4,11 +4,11 @@ public class Screen {
     boolean isScreenInUse;
 
     Screen(int totalSeatsInScreen) {
-        seats = new Seat[totalSeatsInScreen];
+        seats = new Seat[totalSeatsInScreen+1];
         isScreenInUse = false;
     }
 
-    void createSeat(int seatId, String seatType) {
+    public void createSeat(int seatId, String seatType) {
         seats[seatId] = new Seat(seatId, seatType);
     }
 

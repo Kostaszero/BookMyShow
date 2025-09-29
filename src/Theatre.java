@@ -21,9 +21,12 @@ public class Theatre { // a Threate has screens, shows and movies it is playing
         screenList[screenId] = new Screen(totalSeats);
     }
 
-    public int addShow (String startTime, String endTime, String movieToPlay, int screenId, int totalSeats) {
+    public Screen getScreen (int screenId) {
+        return screenList[screenId];
+    }
+
+    public int addShow (String startTime, String endTime, String movieToPlay, int screenId) {
         Show newShow = new Show(startTime, endTime, movieToPlay);
-        screenList[screenId] = new Screen(totalSeats); // should remove this hard code
 
         newShow.setScreen(screenList[screenId]);
 
@@ -40,6 +43,9 @@ public class Theatre { // a Threate has screens, shows and movies it is playing
         return movieList;
     }
 
+    public String getTheatreName() {
+        return Name;
+    }
     // boolean removeShow (String startTime, String endTime) {
     //     movieList.remove()
     // }

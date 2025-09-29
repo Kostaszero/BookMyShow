@@ -22,8 +22,17 @@ public class TheatreController { // This is will create a threatre and assign it
         bookSeatsController = new BookSeats();
     }
 
-    public Theatre createThreatre (String Name, String city, int totalScreens) {
+    public Theatre createThreatre (String Name, String city, int totalScreens, List<Integer> seatCapacity) {
         Theatre theatre = new Theatre(Name, city, totalScreens);
+
+        for (int i=1; i < totalScreens + 1 ; i++) {
+            int seats = seatCapacity.get(i-1);
+            theatre.addScreen(i, seats);
+            for (int seat=1; seat < seats+1 ; seat++) 
+                theatre.getScreen(i).createSeat(seat, "Gold");
+
+        }
+
         ArrayList<Theatre> theatreList = cityTheatreMap.getOrDefault(city, new ArrayList<Theatre>());
         theatreList.add(theatre);
         cityTheatreMap.putIfAbsent(city, theatreList);
@@ -40,7 +49,11 @@ public class TheatreController { // This is will create a threatre and assign it
 
     public void bookSeats(String user, Theatre theatre, int showId, List<Integer> seatIds) {
         Show show = this.getAllShowsinTheatre(theatre).get(showId);
-        bookSeatsController.chooseTickets(user, theatre, show, seatIds);
+        // if (bookSeatsController.areChoosenTicketsBooked(show, seatIds))
+        if (    bookSeatsController.chooseTickets(user, theatre.getTheatreName(), show, seatIds) )
+            System.out.println(user+ " successfully booked ticket - "+seatIds+" at "+theatre.getTheatreName()+" of show "+show.getShowTime());
+        else
+            System.out.println(user+" Sorry, the tickets you've chosen were already booked :(");
     }
 
     public ArrayList<Show> getAllShowsinTheatre (Theatre theatre) {

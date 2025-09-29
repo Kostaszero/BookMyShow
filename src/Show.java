@@ -11,6 +11,10 @@ public class Show {
         this.moviePlaying = moviePlaying;
     }
 
+    public String getShowTime() {
+        return startTime;
+    }
+
     void setScreen (Screen screen) {
         this.screen = screen;
         this.screen.setScreenToUse();
